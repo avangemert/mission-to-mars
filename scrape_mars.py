@@ -219,7 +219,20 @@ def scrape():
     mars_df = table[0]
     mars_df
 
+    # Rename columns
+    mars_df.columns = ['Description', 'Value']
+    mars_df
 
+
+    # In[12]:
+
+
+    # Set index to Description column
+    mars_df.set_index('Description', inplace=True)
+    mars_df
+
+   
+   
     # In[9]:
 
 
