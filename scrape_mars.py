@@ -13,39 +13,49 @@ import pandas as pd
 
 # ## Scraping
 
-# ### NASA Mars News
+
 
 # In[15]:
 
 
 def scrape():
     mars_scrape = {}
+    
+   # ### NASA Mars News
+    executable_path = {'executable_path': '/usr/local/bin/chromedriver'}
+    browser = Browser('chrome', **executable_path, headless=False)
+
+
+    # In[3]:
+
+
     # URL of page to be scraped
     url = 'https://mars.nasa.gov/news/?page=0&per_page=40&order=publish_date+desc%2Ccreated_at+desc&search=&category=19%2C165%2C184%2C204&blank_scope=Latest'
 
 
-    # In[16]:
+    # In[4]:
 
 
     # Retrieve page with the requests module
-    response = requests.get(url)
+    browser.visit(url)
 
 
-    # In[17]:
+    # In[5]:
 
 
     # Create BeautifulSoup object; parse with 'html.parser'
-    soup = BeautifulSoup(response.text, 'html.parser')
+    html = browser.html
+    soup = BeautifulSoup(html, 'html.parser')
 
 
-    # In[18]:
+    # In[6]:
 
 
     # Examine the results, then determine element that contains sought info
     print(soup.prettify())
 
 
-    # In[19]:
+    # In[7]:
 
 
     # Retrieve the parent divs for all articles
@@ -53,21 +63,20 @@ def scrape():
     mars_scrape["news_p"] = news_p
 
 
-    # In[20]:
+    # In[8]:
 
 
     print(news_p)
 
 
-    # In[21]:
+    # In[9]:
 
 
     news_title = soup.find(class_='content_title').text
-
     mars_scrape["news_title"] = news_title
 
 
-    # In[22]:
+    # In[10]:
 
 
     print(news_title)
